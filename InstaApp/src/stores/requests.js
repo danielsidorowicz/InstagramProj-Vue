@@ -18,8 +18,7 @@ const post = async (url, postData, config) => {
             const response = await axios.post(url, postData, config);
             resolve(response.data)
         } catch (error) {
-            // console.error('Error occurred:', error);
-            resolve(error)
+            resolve(error.response.data)
         }
     })
 }

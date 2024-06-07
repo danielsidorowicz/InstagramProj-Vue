@@ -3,27 +3,33 @@ import { post } from '@/stores/requests';
 
 
 function showPasswd() {
-  var input = document.getElementById("password");
-  if (input.type === "password") {
-    input.type = "text";
-  } else {
-    input.type = "password";
-  }
+    var input = document.getElementById("password");
+    if (input.type === "password") {
+        input.type = "text";
+    } else {
+        input.type = "password";
+    }
 }
 
 
 </script>
 
-<template>     
+<template>
     <div class="registerBlock">
-        <Message  v-show="formErr" severity="error" style="background-color: transparent; border-color: #fe2d7d; color: #fe2d7d;" @click="closeFormErr">Fill all fields</Message>
-        <Message  v-show="sentMail" severity="info" style="background-color: transparent;">Sent Email</Message>
-        <Message  v-if="status === 'invalid'" severity="error" style="background-color: transparent; border-color: #fe2d7d; color: #fe2d7d;">Token Expired</Message>
+        <Message v-show="err422" severity="error"
+            style="background-color: transparent; border-color: #fe2d7d; color: #fe2d7d;" @click="closeErr422">{{
+                errorMessage }}</Message>
+        <Message v-show="formErr" severity="error"
+            style="background-color: transparent; border-color: #fe2d7d; color: #fe2d7d;" @click="closeFormErr">Fill all
+            fields</Message>
+        <Message v-show="sentMail" severity="info" style="background-color: transparent;">Sent Email</Message>
+        <Message v-if="status === 'invalid'" severity="error"
+            style="background-color: transparent; border-color: #fe2d7d; color: #fe2d7d;">Token Expired</Message>
         <div class="registerDiv">
             <h1>Utwórz konto</h1>
             <div class="nameInput">
                 <h2>Imie</h2>
-                <input type="text" name="name" id="name" placeholder="Name"> 
+                <input type="text" name="name" id="name" placeholder="Name">
             </div>
             <div class="lastNameInput">
                 <h2>Nazwisko</h2>
@@ -46,9 +52,7 @@ function showPasswd() {
     </div>
 </template>
 
-<style scoped>    
-
-    .registerBlock {
+<style scoped>    .registerBlock {
         width: 100%;
         padding: 100px;
         min-height: 860px;
@@ -58,7 +62,7 @@ function showPasswd() {
         justify-content: center;
         flex-direction: column;
         gap: 20px;
-        
+
     }
 
     .registerDiv {
@@ -119,7 +123,7 @@ function showPasswd() {
         flex-direction: row;
         align-items: center;
         gap: 5px
-        /* height: fit-content; */
+            /* height: fit-content; */
     }
 
     .labelAndShow input {
@@ -149,7 +153,9 @@ export default {
     data() {
         return {
             sentMail: false,
-            formErr: false
+            formErr: false,
+            err422: false,
+            errorMessage: null,
         }
     },
     components: {
@@ -168,7 +174,7 @@ export default {
             let email = document.getElementById("email").value
             let password = document.getElementById("password").value
 
-            if(name == "" || lastName == "" || email == "" || password == ""){
+            if (name == "" || lastName == "" || email == "" || password == "") {
                 this.formErr = true
             } else {
                 let postData = {
@@ -182,18 +188,26 @@ export default {
 
                 let response = await post('http://localhost:3000/api/user/register', postData, config)
 
-                console.log(response);
+                if (response.status == 422) {
+                    this.err422 = true
+                    this.errorMessage = response.error;
+                } else {
 
-                document.getElementById("name").value = ""
-                document.getElementById("lastName").value = ""
-                document.getElementById("email").value = ""
-                document.getElementById("password").value = ""
-                this.sentMail = true;
-                
+                    console.log(response);
+
+                    document.getElementById("name").value = ""
+                    document.getElementById("lastName").value = ""
+                    document.getElementById("email").value = ""
+                    document.getElementById("password").value = ""
+                    this.sentMail = true;
+                }
             }
         },
         closeFormErr() {
             this.formErr = false
+        },
+        closeErr422() {
+            this.err422 = false
         }
     },
     setup() {

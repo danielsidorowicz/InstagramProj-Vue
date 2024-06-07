@@ -18,7 +18,8 @@ app.use(router)
 
 
 router.beforeEach((to, from, next) => {
-    if (!checkIfCookieExists("token") && to.path !== '/default' && to.path !== '/login' && to.path !== '/register' && to.path !== '/') {
+    // console.log(checkIfCookieExists("token"));
+    if (!checkIfCookieExists("token") && to.path != "/default" && to.path != "/login" && to.path != "/register") {
         next('/default');
     } else {
         next();
