@@ -6,7 +6,9 @@ import { RouterLink } from 'vue-router'
 <template>
     <div class="defaultSite">
         <div class="logoDiv" id="logoDiv">
-            <img src="../assets/AppLogo.png" alt="AppLogo">
+            <router-link to="/">
+                <img src="../assets/AppLogo.png" alt="AppLogo">
+            </router-link>
         </div>
         <div class="welcomeDiv" id="welcomeDiv">
             <h1>Projekt InstaApp</h1>
@@ -51,9 +53,9 @@ import { RouterLink } from 'vue-router'
         justify-content: center;
     }
 
-    .logoDiv img {
+    .logoDiv a img {
         height: 100%;
-        width: 75%;
+        width: 100%;
         object-fit: contain;
     } 
     

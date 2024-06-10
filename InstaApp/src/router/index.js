@@ -5,6 +5,9 @@ import AboutView from '../views/AboutView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
 import AddPhoto from '../views/AddPhoto.vue'
+import Profile from '../views/ProfileView.vue'
+import EditProfile from '../views/EditProfileView.vue'
+import ViewPostView from '../views/ViewPostView.vue'
 
 const NotFoundView = () => import("@/views/NotFoundView.vue")
 
@@ -50,6 +53,21 @@ const router = createRouter({
       path: '/addPhoto',
       name: 'AddPhoto',
       component: AddPhoto,
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
+    },
+    {
+      path: '/editProfile',
+      name: 'EditProfile',
+      component: EditProfile,
+    },
+    {
+      path: '/viewPost',
+      name: 'ViewPost',
+      component: ViewPostView,
     },
   ]
 })

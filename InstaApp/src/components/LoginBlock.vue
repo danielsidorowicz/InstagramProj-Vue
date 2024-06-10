@@ -67,7 +67,7 @@
      outline: none;
  }
 
- input[type="checkbox"] {
+ div[class="labelAndShow"] input[type="checkbox"] {
      width: fit-content !important;
      height: fit-content !important;
  }
@@ -159,6 +159,7 @@ export default {
 
             const userStore = useUserStore()
             userStore.setEmail(document.getElementById("email").value)
+            
 
             //   console.log(response.response.data);
             // if (response && response.response && typeof response.response.data !== 'undefined') {
@@ -173,8 +174,10 @@ export default {
                 this.errorMessage = response.error;
             } else {
                 let expirationDate = new Date();
+                userStore.pfpBase64 = response.token.pfpBase64
+                userStore.user = response.token.user
                 expirationDate.setDate(expirationDate.getDate() + 14);
-                document.cookie = `token=${response.token}; expires=${expirationDate.toUTCString()}; path=/`
+                document.cookie = `token=${response.token.token}; expires=${expirationDate.toUTCString()}; path=/`
                 router.push('/')
             }
         },

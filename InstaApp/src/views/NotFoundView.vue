@@ -3,5 +3,5 @@
 </script>
 
 <template>
-    <h1>Nigger</h1>
+    <h1>Page does not exist</h1>
 </template>

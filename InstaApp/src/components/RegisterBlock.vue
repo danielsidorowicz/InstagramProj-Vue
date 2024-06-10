@@ -25,7 +25,7 @@ function showPasswd() {
         <Message v-show="sentMail" severity="info" style="background-color: transparent;">Sent Email</Message>
         <Message v-if="status === 'invalid'" severity="error"
             style="background-color: transparent; border-color: #fe2d7d; color: #fe2d7d;">Token Expired</Message>
-        <div class="registerDiv">
+        <div class="registerDivBlock">
             <h1>Utwórz konto</h1>
             <div class="nameInput">
                 <h2>Imie</h2>
@@ -52,7 +52,8 @@ function showPasswd() {
     </div>
 </template>
 
-<style scoped>    .registerBlock {
+<style > 
+   .registerBlock {
         width: 100%;
         padding: 100px;
         min-height: 860px;
@@ -65,7 +66,7 @@ function showPasswd() {
 
     }
 
-    .registerDiv {
+    .registerDivBlock {
         width: 75%;
         height: 75%;
         border: 2px solid white;
@@ -79,13 +80,13 @@ function showPasswd() {
         align-items: left;
     }
 
-    .registerDiv div:not(.labelAndShow) {
+    .registerDivBlock div:not(.labelAndShow) {
         display: flex;
         flex-direction: column;
         gap: 10px
     }
 
-    .registerDiv div input {
+    .registerDivBlock div input {
         width: 75%;
         height: 40px;
         font-size: 1.2em;
@@ -93,12 +94,12 @@ function showPasswd() {
         outline: none;
     }
 
-    input[type="checkbox"] {
+    div[class="labelAndShow"] input[type="checkbox"] {
         width: fit-content !important;
         height: fit-content !important;
     }
 
-    .registerDiv input[type="submit"] {
+    .registerDivBlock input[type="submit"] {
         background-color: transparent;
         border: 2px solid white;
         /* border-radius: 25px; */
@@ -111,7 +112,7 @@ function showPasswd() {
         /* margin: -6px; */
     }
 
-    .registerDiv input[type="submit"]:hover {
+    .registerDivBlock input[type="submit"]:hover {
         transition: 0.3s;
         /* transform: scale(1); */
         background-color: #fe2d7d;
@@ -138,6 +139,10 @@ function showPasswd() {
         width: 40% !important;
     }
 
+    .p-message-wrapper {
+        justify-content: space-between;
+    }
+
     @media only screen and (max-width: 920px) {
         .registerBlock {
             height: 100%;
@@ -148,6 +153,7 @@ function showPasswd() {
 
 <script>
 import Message from 'primevue/message';
+
 
 export default {
     data() {
@@ -184,16 +190,17 @@ export default {
                     password: password
                 }
 
-                console.log(postData);
+                // console.log(postData);
 
                 let response = await post('http://localhost:3000/api/user/register', postData, config)
+
 
                 if (response.status == 422) {
                     this.err422 = true
                     this.errorMessage = response.error;
                 } else {
 
-                    console.log(response);
+                    // console.log(response);
 
                     document.getElementById("name").value = ""
                     document.getElementById("lastName").value = ""
@@ -216,7 +223,7 @@ export default {
         // Accessing query parameters
         const status = route.query.status;
 
-        console.log(status)
+        // console.log(status)
 
         return {
             status
